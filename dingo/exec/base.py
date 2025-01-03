@@ -54,5 +54,3 @@ class Executor(ABC):
                 raise ValueError("root_exec must be a class or a function")
 
         return decorator
-
-
