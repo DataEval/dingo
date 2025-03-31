@@ -83,67 +83,6 @@ class ChatMLConvertor(BaseConverter):
         return _convert
 
 
-@BaseConverter.register('multi_turn_dialog')
-class MultiTurnDialogConverter(BaseConverter):
-    """
-    Unified multi-turn dialog converter for datasets like MT-Bench101 and MT-Bench.
-    Current supported mode: 'all'.
-    """
-
-    data_id = 0
-
-    def __init__(self):
-        super().__init__()
-
-    @classmethod
-    def convertor(cls, input_args: InputArgs) -> Callable:
-        def _convert(raw: Union[str, Dict]):
-            j = raw
-            if isinstance(raw, str):
-                j = json.loads(raw)
-            cls.data_id += 1
-
-            raw_history: list = j.get(input_args.column_content, []) if input_args.column_content != '' else j.get('history', [])
-            keys = list({key for d in raw_history for key in d.keys()})
-
-            # get multi-turn dialogues base on the format of the input data
-            if 'user' in keys and 'bot' in keys:
-                # MT-Bench101 format
-                history = raw_history
-            elif 'content' in keys and 'role' in keys:
-                history = []
-                # MT-Bench format
-                for turn in raw_history:
-                    if turn.get('role') == 'assistant':
-                        history.append({'bot': turn.get('content')})
-                    else:
-                        history.append({'user': turn.get('content')})
-            else:
-                raise ValueError(
-                    "The provided data does not conform to the multi-turn dialogue format. Please check the corresponding field.")
-
-            if not history:
-                # if not multi-turn dialogues, raise error
-                raise ValueError("The provided data does not conform to the multi-turn dialogue format. Please check the corresponding field.")
-
-            # process each turn of dialogue based on mode
-            if input_args.custom_config and input_args.custom_config.get('multi_turn_mode') == 'all':
-                content = ''
-                for i, turn in enumerate(history):
-                    if i > 0:
-                        content += '\n\n'
-                    content += f"user: {turn.get('user', '')}"
-                    content += f"\n\nassistant: {turn.get('bot', '')}"
-                yield MetaData(**{
-                    'data_id': cls.find_levels_data(j, input_args.column_id) if input_args.column_id != '' else str(cls.data_id),
-                    'prompt': '',
-                    'content': content,
-                    'raw_data': j
-                })
-
-        return _convert
-
-
 @BaseConverter.register('json')
 class JsonConverter(BaseConverter):
     """

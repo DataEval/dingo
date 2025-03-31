@@ -66,13 +66,12 @@
 进一步来说，就是使用上述配置项中提到的 `custom_config` 的参数，该参数指向配置文件路径或字典。如果所指向的是文件，那么文件中仅包含一个json格式
 的数据，例如： [config_template.json](../test/config/config_template.json)
 
-| Parameter       | Type | Description                                              |
-|-----------------|------|----------------------------------------------------------|
-| rule_list       | list | choose these functions as a group to check data quality. |
-| prompt_list     | list | choose these prompts as a group to check data quality.   |
-| rule_config     | dict | parameters related to rules and key is rule name.        |
-| llm_config      | dict | parameters related to llm and key is llm name.           |
-| multi_turn_mode | str  | choose parse mode for multi-turn dialogue.               |
+| Parameter   | Type | Description                                              |
+|-------------|------|----------------------------------------------------------|
+| rule_list   | list | choose these functions as a group to check data quality. |
+| prompt_list | list | choose these prompts as a group to check data quality.   |
+| rule_config | dict | parameters related to rules and key is rule name.        |
+| llm_config  | dict | parameters related to llm and key is llm name.           |
 
 `rule_list` 和 `prompt_list` 参数与上述提到的 `eval_group` 配合使用。
 如果 `eval_group` 已经内置，那 `rule_list` 和 `prompt_list` 则报错提示。
@@ -119,15 +118,3 @@
 `frequency_penalty` 数字类型，可选。默认为 0。范围在 -2.0 到 2.0 之间的数字。
 
 更多参数细节可参考OpenAI API官方文档。
-
-### multi_turn_mode
-
-`Dingo` 支持多轮对话数据质检，如MT-Bench、MT-Bench++和MT-Bench101，其中包含多轮对话质检的解析模式。
-
-| Parameter | Type |                Description                |
-|-----------|------|-------------------------------------------|
-| all       | str  | concat all turns in multi-turn dialogues. |
-
-具体的使用方法，可以参考：
-[sdk_mtbench101_rule_all.py](../examples/multi_turn_dialogues/sdk_mtbench101_rule_all.py)、[sdk_mtbench101_llm.py](../examples/multi_turn_dialogues/sdk_mtbench101_llm.py)、
-[sdk_mtbench_rule_all.py](../examples/multi_turn_dialogues/sdk_mtbench_rule_all.py)、[sdk_mtbench_llm.py](../examples/multi_turn_dialogues/sdk_mtbench_llm.py)。
