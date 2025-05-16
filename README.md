@@ -26,12 +26,11 @@
 </div>
 
 
-<div align="center">
-  <a href="https://discord.gg/Jhgb2eKWh8" style="text-decoration:none;">
-    <img src="https://user-images.githubusercontent.com/25839884/218347213-c080267f-cbb6-443e-8532-8e1ed9a58ea9.png" width="3%" alt="Discord" /></a>
-  <a href="https://huggingface.co/spaces/DataEval/dingo" style="text-decoration:none;">
-    <img src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.png" width="3%" alt="Hugging Face" /></a>
-</div>
+<!-- join us -->
+
+<p align="center">
+    👋 join us on <a href="https://discord.gg/Jhgb2eKWh8" target="_blank">Discord</a> and <a href="./docs/assets/wechat.jpg" target="_blank">WeChat</a>
+</p>
 
 
 # Changelog
